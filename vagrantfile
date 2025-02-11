@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "projeto4_vagrant_zabbix_server"
+    vb.memory = 1024
+    vb.cpus = 2
+  end
+
+  # Configuração de tempo de espera para a conexão SSH
+  config.ssh.keep_alive = true  # Manter a conexão SSH viva
+
+  # Imagem usada
+  config.vm.box = "ubuntu/jammy64"
+
+  # Placa de rede privada
+  config.vm.network "private_network", ip: "192.168.56.10"
+
+  # Script externo
+  config.vm.provision "shell", path: "./scripts/mysql-zabbix-install.sh"
+end
