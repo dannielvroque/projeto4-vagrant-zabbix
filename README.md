@@ -1,88 +1,72 @@
-Projeto Vagrant com Zabbix e MySQL
+# Projeto: Vagrant + Zabbix Server
 
-Este projeto utiliza Vagrant para provisionar uma máquina virtual Ubuntu 22.04 com o Zabbix Server e MySQL instalados automaticamente.
+Este projeto utiliza Vagrant para provisionar uma máquina virtual Ubuntu 22.04 (Jammy) com o Zabbix Server e MySQL pré-configurados.
 
-📌 Requisitos
+## Pré-requisitos
 
-Antes de iniciar, certifique-se de ter instalado em seu sistema:
+Certifique-se de ter os seguintes softwares instalados:
+- [VirtualBox](https://www.virtualbox.org/)
+- [Vagrant](https://www.vagrantup.com/)
 
-VirtualBox
+## Configuração da Máquina Virtual
 
-Vagrant
+O Vagrantfile define uma máquina virtual com as seguintes configurações:
+- **Sistema operacional:** Ubuntu 22.04 (jammy64)
+- **Memória:** 1024MB
+- **CPUs:** 2
+- **IP privado:** 192.168.56.10
+- **Provisionamento:** Script shell para instalação do MySQL e Zabbix
 
-🚀 Configuração do Ambiente
+## Como Usar
 
-1️⃣ Clonar o Repositório
+1. Clone este repositório:
+   ```sh
+   git clone https://github.com/dannielvroque/projeto4-vagrant-zabbix.git
+   cd seu-repositorio
+   ```
 
- git clone https://github.com/seu-repositorio/vagrant-zabbix.git
- cd vagrant-zabbix
+2. Inicie a máquina virtual:
+   ```sh
+   vagrant up
+   ```
 
-2️⃣ Iniciar a Máquina Virtual
+3. Acesse a máquina virtual via SSH:
+   ```sh
+   vagrant ssh
+   ```
 
- vagrant up
+## Serviços Instalados
 
-Isso iniciará a VM, instalará os pacotes necessários e configurará o Zabbix automaticamente.
+### MySQL
+- Banco de dados: `zabbix`
+- Usuário: `zabbix`
+- Senha: `teste123`
 
-3️⃣ Acessar a VM
+### Zabbix Server
+- Instalado e configurado para conectar ao banco de dados MySQL
 
- vagrant ssh
+### Nginx + PHP
+- Configurado para rodar a interface web do Zabbix
+- **Acesso Web:** `http://192.168.56.10`
 
-📡 Acesso ao Zabbix
+## Personalização
 
-Após a instalação, o Zabbix Web Interface estará disponível em:
+Caso precise alterar alguma configuração, edite:
+- `Vagrantfile` para modificar os recursos da VM
+- `scripts/mysql-zabbix-install.sh` para ajustes no provisionamento
 
-http://192.168.56.10/
+## Parar e Remover a Máquina Virtual
 
-🔑 Credenciais padrão:Usuário: AdminSenha: zabbix
+Para desligar a VM:
+```sh
+vagrant halt
+```
 
-📜 Configuração no Vagrantfile
+Para destruir a VM:
+```sh
+vagrant destroy -f
+```
 
-O Vagrantfile contém as seguintes configurações:
+## Licença
+Este projeto é distribuído sob a licença MIT.
 
-Box: ubuntu/jammy64
-
-Memória: 1024 MB
-
-CPUs: 2
-
-Rede privada: IP 192.168.56.10
-
-Provisionamento via script: scripts/mysql-zabbix-install.sh
-
-🔧 Provisionamento - Script mysql-zabbix-install.sh
-
-O script executado automaticamente faz:
-
-Atualização do sistema.
-
-Instalação do MySQL Server e criação do banco de dados zabbix.
-
-Instalação do Zabbix Server, Agent, Frontend (Nginx e PHP).
-
-Importação do esquema de banco de dados do Zabbix.
-
-Configuração do zabbix_server.conf.
-
-Ajustes no Nginx e PHP.
-
-Reinicialização e ativação dos serviços necessários.
-
-🛠️ Comandos Úteis
-
-🔄 Recarregar a VM:
-
- vagrant reload --provision
-
-🛑 Parar a VM:
-
- vagrant halt
-
-❌ Destruir a VM:
-
- vagrant destroy -f
-
-📝 Observações
-
-Certifique-se de que o VirtualBox e o Vagrant estejam atualizados.
-
-Se houver problemas com a VM, tente executar vagrant destroy -f seguido de vagrant up novamente.
